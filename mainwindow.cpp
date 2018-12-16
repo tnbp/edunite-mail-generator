@@ -172,7 +172,7 @@ void MainWindow::on_buttonCopyToClipboard_clicked()
 
 QString MainWindow::newPassword(int length) const
 {
-    const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+    const QString possibleCharacters("ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789"); // exclude I, l, 1, O, and 0
 
     QString randomString;
     for(int i = 0; i < length; i++)
