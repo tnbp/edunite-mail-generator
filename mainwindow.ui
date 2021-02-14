@@ -48,7 +48,7 @@
       <x>10</x>
       <y>0</y>
       <width>811</width>
-      <height>32</height>
+      <height>34</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -130,7 +130,7 @@
       <x>10</x>
       <y>40</y>
       <width>811</width>
-      <height>32</height>
+      <height>34</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -166,7 +166,8 @@
          <string>Schüler (du)</string>
         </property>
         <property name="icon">
-         <iconset theme="actor"/>
+         <iconset theme="actor">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </item>
        <item>
@@ -174,7 +175,8 @@
          <string>Oberstufen-Schüler (Sie)</string>
         </property>
         <property name="icon">
-         <iconset theme="user-available"/>
+         <iconset theme="user-available">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </item>
        <item>
@@ -182,7 +184,8 @@
          <string>Elternteil</string>
         </property>
         <property name="icon">
-         <iconset theme="user-idle"/>
+         <iconset theme="user-idle">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </item>
       </widget>
@@ -208,7 +211,7 @@
       <x>10</x>
       <y>80</y>
       <width>811</width>
-      <height>32</height>
+      <height>34</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -244,7 +247,8 @@
          <string>Schüler</string>
         </property>
         <property name="icon">
-         <iconset theme="actor"/>
+         <iconset theme="actor">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </item>
        <item>
@@ -252,7 +256,8 @@
          <string>Eltern</string>
         </property>
         <property name="icon">
-         <iconset theme="user-idle"/>
+         <iconset theme="user-idle">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </item>
        <item>
@@ -260,7 +265,8 @@
          <string>alle</string>
         </property>
         <property name="icon">
-         <iconset theme="resource-group"/>
+         <iconset theme="resource-group">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </item>
       </widget>
@@ -286,7 +292,7 @@
       <x>10</x>
       <y>280</y>
       <width>811</width>
-      <height>34</height>
+      <height>36</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -312,7 +318,8 @@
         <string>E-Mail-Text generieren</string>
        </property>
        <property name="icon">
-        <iconset theme="mail-read"/>
+        <iconset theme="mail-read">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -362,10 +369,39 @@
       <x>10</x>
       <y>570</y>
       <width>811</width>
-      <height>34</height>
+      <height>36</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_8">
+     <item>
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>Unterschrift:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="signatureName">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>200</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>250</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
+     </item>
      <item>
       <spacer name="horizontalSpacer_5">
        <property name="orientation">
@@ -385,7 +421,8 @@
         <string>in die Zwischenablage</string>
        </property>
        <property name="icon">
-        <iconset theme="edit-copy"/>
+        <iconset theme="edit-copy">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -395,7 +432,8 @@
         <string>Beenden</string>
        </property>
        <property name="icon">
-        <iconset theme="application-exit"/>
+        <iconset theme="application-exit">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -407,7 +445,7 @@
       <x>10</x>
       <y>120</y>
       <width>811</width>
-      <height>32</height>
+      <height>34</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -486,7 +524,7 @@
       <x>10</x>
       <y>160</y>
       <width>811</width>
-      <height>34</height>
+      <height>36</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -499,33 +537,58 @@
         </size>
        </property>
        <property name="text">
-        <string>Neues Passwort:</string>
+        <string>Datum der E-Mail:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="newPassword">
+      <widget class="QDateEdit" name="emailDate"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>➤Passwort:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="resultingPassword">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="minimumSize">
         <size>
-         <width>300</width>
+         <width>0</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>300</width>
+         <width>180</width>
          <height>16777215</height>
         </size>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonGenerate_2">
-       <property name="text">
-        <string>Passwort generieren</string>
+       <property name="baseSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
        </property>
-       <property name="icon">
-        <iconset theme="password-generate"/>
+       <property name="font">
+        <font>
+         <family>Liberation Mono</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="frame">
+        <bool>false</bool>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -667,8 +730,6 @@
   <tabstop>recipType</tabstop>
   <tabstop>patientType</tabstop>
   <tabstop>patientName</tabstop>
-  <tabstop>newPassword</tabstop>
-  <tabstop>buttonGenerate_2</tabstop>
   <tabstop>patientLogin_child</tabstop>
   <tabstop>patientLogin_parent</tabstop>
   <tabstop>buttonGenerate</tabstop>

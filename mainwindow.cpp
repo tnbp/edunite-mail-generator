@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->newPassword->setText(MainWindow::newPassword(8));
+    ui->emailDate->setDate(QDate::currentDate());
 }
 
 MainWindow::~MainWindow()
@@ -43,7 +43,10 @@ void MainWindow::on_buttonGenerate_clicked()
     const QString mailBodyListAllAccountsParent = "%1 (Eltern-Zugang)";
     const QString mailBodyListAllAccountsChild = "%1 (%2 Zugang)";
 
-    const QString mailClosing = "Mit freundlichem Gruß\nHerr Musterfrau";
+    const QString mailBodyPasswordWarningFormal = "BITTE ACHTEN SIE DARAUF, BEIM KOPIEREN DES PASSWORTS KEINE ÜBERZÄHLIGEN LEERZEICHEN ODER ZEILENUMBRÜCHE ZU MARKIEREN.";
+    const QString mailBodyPasswordWarningInformal = "BITTE ACHTE DARAUF, BEIM KOPIEREN DES PASSWORTS KEINE ÜBERZÄHLIGEN LEERZEICHEN ODER ZEILENUMBRÜCHE ZU MARKIEREN.";
+
+    const QString mailClosing = "Mit freundlichem Gruß\n%1";
 
     QString finalMailText;
 
@@ -66,19 +69,19 @@ void MainWindow::on_buttonGenerate_clicked()
         finalMailText.append("\n\n");
         switch (ui->patientType->currentIndex()) {
             case 0:
-            finalMailText.append(mailBodyFormalChild.arg(MainWindow::makeGenitive(ui->patientName->text())).arg(ui->newPassword->text()));
+            finalMailText.append(mailBodyFormalChild.arg(MainWindow::makeGenitive(ui->patientName->text())).arg(QString("Riedberg")+QString(ui->emailDate->date().toString(QString("ddMMyy")))));
             finalMailText.append("\n");
             finalMailText.append(mailBodyListSingleLogin.arg(ui->patientLogin_child->text()));
             break;
 
             case 1:
-            finalMailText.append(mailBodyFormalParent.arg(ui->newPassword->text()));
+            finalMailText.append(mailBodyFormalParent.arg(QString("Riedberg")+QString(ui->emailDate->date().toString(QString("ddMMyy")))));
             finalMailText.append("\n");
             finalMailText.append(mailBodyListSingleLogin.arg(ui->patientLogin_parent->text()));
             break;
 
             default:
-            finalMailText.append(mailBodyFormalAll.arg(ui->newPassword->text()));
+            finalMailText.append(mailBodyFormalAll.arg(QString("Riedberg")+QString(ui->emailDate->date().toString(QString("ddMMyy")))));
             finalMailText.append("\n\n");
             finalMailText.append(mailBodyListAllAccounts);
             finalMailText.append("\n");
@@ -105,19 +108,19 @@ void MainWindow::on_buttonGenerate_clicked()
         finalMailText.append("\n\n");
         switch (ui->patientType->currentIndex()) {
             case 0:
-            finalMailText.append(mailBodyFormalSelf.arg(ui->newPassword->text()));
+            finalMailText.append(mailBodyFormalSelf.arg(QString("Riedberg")+QString(ui->emailDate->date().toString(QString("ddMMyy")))));
             finalMailText.append("\n");
             finalMailText.append(mailBodyListSingleLogin.arg(ui->patientLogin_child->text()));
             break;
 
             case 1:
-            finalMailText.append(mailBodyFormalSelfParents.arg(ui->newPassword->text()));
+            finalMailText.append(mailBodyFormalSelfParents.arg(QString("Riedberg")+QString(ui->emailDate->date().toString(QString("ddMMyy")))));
             finalMailText.append("\n");
             finalMailText.append(mailBodyListSingleLogin.arg(ui->patientLogin_parent->text()));
             break;
 
             default:
-            finalMailText.append(mailBodyFormalAll.arg(ui->newPassword->text()));
+            finalMailText.append(mailBodyFormalAll.arg(QString("Riedberg")+QString(ui->emailDate->date().toString(QString("ddMMyy")))));
             finalMailText.append("\n\n");
             finalMailText.append(mailBodyListAllAccounts);
             finalMailText.append("\n");
@@ -132,19 +135,19 @@ void MainWindow::on_buttonGenerate_clicked()
         finalMailText.append("\n\n");
         switch (ui->patientType->currentIndex()) {
             case 0:
-            finalMailText.append(mailBodyInformalChild.arg(ui->newPassword->text()));
+            finalMailText.append(mailBodyInformalChild.arg(QString("Riedberg")+QString(ui->emailDate->date().toString(QString("ddMMyy")))));
             finalMailText.append("\n");
             finalMailText.append(mailBodyListSingleLogin.arg(ui->patientLogin_child->text()));
             break;
 
             case 1:
-            finalMailText.append(mailBodyInformalParent.arg(ui->newPassword->text()));
+            finalMailText.append(mailBodyInformalParent.arg(QString("Riedberg")+QString(ui->emailDate->date().toString(QString("ddMMyy")))));
             finalMailText.append("\n");
             finalMailText.append(mailBodyListSingleLogin.arg(ui->patientLogin_parent->text()));
             break;
 
             default:
-            finalMailText.append(mailBodyFormalAll.arg(ui->newPassword->text()));
+            finalMailText.append(mailBodyFormalAll.arg(QString("Riedberg")+QString(ui->emailDate->date().toString(QString("ddMMyy")))));
             finalMailText.append("\n\n");
             finalMailText.append(mailBodyListAllAccounts);
             finalMailText.append("\n");
@@ -155,39 +158,17 @@ void MainWindow::on_buttonGenerate_clicked()
         }
     }
     finalMailText.append("\n\n");
-    finalMailText.append(mailClosing);
+    if (ui->recipType->currentIndex() == 0) finalMailText.append(mailBodyPasswordWarningInformal);
+    else finalMailText.append(mailBodyPasswordWarningFormal);
+    finalMailText.append("\n\n");
+    finalMailText.append(mailClosing.arg(ui->signatureName->text()));
     ui->plainTextEditMailBody->setPlainText(finalMailText);
-}
-
-void MainWindow::on_buttonGenerate_2_clicked()
-{
-    ui->newPassword->setText(newPassword());
 }
 
 void MainWindow::on_buttonCopyToClipboard_clicked()
 {
     QClipboard *clipboard = QApplication::clipboard();
     clipboard->setText(ui->plainTextEditMailBody->toPlainText());
-}
-
-QString MainWindow::newPassword(int length) const
-{
-    const QString possibleCharacters("ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789"); // exclude I, l, 1, O, and 0
-
-    QString randomString;
-    for(int i = 0; i < length; i++)
-    {
-        int index = qrand() % possibleCharacters.length();
-        QChar nextChar = possibleCharacters.at(index);
-        randomString.append(nextChar);
-    }
-    if (!randomString.contains(QRegExp("[a-z]")) || !randomString.contains(QRegExp("[A-Z]")) || !randomString.contains(QRegExp("[0-9]"))) randomString = MainWindow::newPassword(length);
-    return randomString;
-}
-
-QString MainWindow::newPassword() const
-{
-    return MainWindow::newPassword(8);
 }
 
 QString MainWindow::makeGenitive(QString name) const
@@ -261,11 +242,6 @@ void MainWindow::on_patientName_textEdited()
     MainWindow::toggleButtonDisabled();
 }
 
-void MainWindow::on_newPassword_textEdited()
-{
-    MainWindow::toggleButtonDisabled();
-}
-
 void MainWindow::on_patientLogin_child_textEdited()
 {
     MainWindow::toggleButtonDisabled();
@@ -280,8 +256,8 @@ void MainWindow::toggleButtonDisabled()
 {
     bool disabled = false;
     if (ui->recipName->text().isEmpty()) disabled = true;
+    if (ui->signatureName->text().isEmpty()) disabled = true;
     if (ui->patientName->isEnabled() && ui->patientName->text().isEmpty()) disabled = true;
-    if (ui->newPassword->text().isEmpty()) disabled = true;
     if (ui->patientLogin_child->isEnabled() && !MainWindow::isValidEmail(ui->patientLogin_child->text())) disabled = true;
     if (ui->patientLogin_parent->isEnabled() && !MainWindow::isValidEmail(ui->patientLogin_parent->text())) disabled = true;
     ui->buttonGenerate->setDisabled(disabled);
@@ -293,4 +269,14 @@ bool MainWindow::isValidEmail(QString email)
     mailREX.setCaseSensitivity(Qt::CaseInsensitive);
     mailREX.setPatternSyntax(QRegExp::RegExp);
     return mailREX.exactMatch(email);
+}
+
+void MainWindow::on_signatureName_textEdited(const QString &arg1)
+{
+    MainWindow::toggleButtonDisabled();
+}
+
+void MainWindow::on_emailDate_userDateChanged(const QDate &date)
+{
+    ui->resultingPassword->setText(QString("Riedberg")+QString(date.toString(QString("ddMMyy"))));
 }
